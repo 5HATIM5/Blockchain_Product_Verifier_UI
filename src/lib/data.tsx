@@ -3,15 +3,15 @@ import React from "react";
 type Props = {};
 
 export const GetBlockchain = async () => {
-  // try {
-  //   const res = await fetch(`http://127.0.0.1:8000/blockchain/`, {
-  //     method: "GET",
-  //   });
-  //   const data = await res.json();
-  //   return data;
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  // }
+  try {
+    const res = await fetch(`${process.env.BACKEND_URL}/blockchain/`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };
 
 export const ValidateBlockchain = async () => {
@@ -58,15 +58,15 @@ export const MineBlockchain = async (productName: string,ProductFormData:object)
 };
 
 export const GetProducts = async () => {
-  // try {
-  //   const res = await fetch(`http://127.0.0.1:8000/products/`, {
-  //     method: "GET",
-  //   });
-  //   const data = await res.json();
-  //   return data;
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  // }
+  try {
+    const res = await fetch(`${process.env.BACKEND_URL}/products/`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };
 
 export const GetProductsById = async (product_id: number) => {
