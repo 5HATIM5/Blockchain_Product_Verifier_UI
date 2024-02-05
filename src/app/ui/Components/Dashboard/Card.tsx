@@ -1,7 +1,7 @@
 "use client";
 
 import { ValidateBlockchain } from "@/lib/data";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Popover from "../Blockchain/Popover";
 
 type Props = {
@@ -9,13 +9,11 @@ type Props = {
 
 const Card = (props: Props) => {
   const [valid, setvalid] = useState(false);
-  useEffect(() => {
-    console.log("In card")
-   }, [])
+
   async function checker() {
     const blockchain = await ValidateBlockchain();
     console.log(blockchain);
-    setvalid(blockchain);
+    // setvalid(blockchain);
   }
 
   return (

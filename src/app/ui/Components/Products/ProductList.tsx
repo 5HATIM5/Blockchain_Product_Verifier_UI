@@ -20,10 +20,10 @@ const ProductList = (props: Props) => {
 
   const fetchProducts = async () => {
     try {
-      const productList = await GetProducts();
-      setProducts(productList.Response);
-      console.log(productList.Response);
-      setLoading(false);
+      // const productList = await GetProducts();
+      // setProducts(productList.Response);
+      // console.log(productList?.Response);
+      // setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -41,9 +41,9 @@ const ProductList = (props: Props) => {
 
       <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
         {products?.map((product) => (
-          <Link
+          <span
             key={product.id}
-            href={`/dashboard/products/${product.id}`}
+       
             className="group px-2 py-2"
           >
             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
@@ -124,7 +124,7 @@ const ProductList = (props: Props) => {
                 </svg>
               </div>
             </div>
-          </Link>
+          </span>
         ))}
       </div>
     </div>

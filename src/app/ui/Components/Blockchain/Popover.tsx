@@ -48,8 +48,7 @@ const Popover = (props: Props) => {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    YOUR BLOKCHAIN IS {props.validation ? "VALID" : "NOT VALID"}
-                    .
+                    YOUR BLOKCHAIN IS {props.validation ? "VALID." : "NOT VALID."}
                   </p>
                 </div>
 

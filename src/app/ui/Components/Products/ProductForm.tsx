@@ -42,13 +42,13 @@ export const ProductForm = (props: Props) => {
     };
 
   
-    setNewBlock(await MineBlockchain(ProductFormData.name as string,ProductFormData));
+    // setNewBlock(await MineBlockchain(ProductFormData.name as string,ProductFormData));
     // setProduct(await StoreProduct(ProductFormData));
 
     if (newBlock) {
       console.log(newBlock)
       ProductFormData.block_hash = newBlock["block_hash"];
-      setProduct(await StoreProduct(ProductFormData));
+      // setProduct(await StoreProduct(ProductFormData));
     }
     setPopup(true);
   }
