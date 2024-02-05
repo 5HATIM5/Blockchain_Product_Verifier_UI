@@ -20,10 +20,10 @@ const ProductList = (props: Props) => {
 
   const fetchProducts = async () => {
     try {
-      // const productList = await GetProducts();
-      // setProducts(productList.Response);
-      // console.log(productList?.Response);
-      // setLoading(false);
+      const productList = await GetProducts();
+      setProducts(productList.Response);
+      console.log(productList.Response);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
