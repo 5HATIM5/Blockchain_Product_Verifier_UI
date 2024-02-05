@@ -23,7 +23,7 @@ export const ProductForm = (props: Props) => {
 
       if (!allowedExtensions.includes(fileExtension)) {
         alert("Invalid file type. Allowed types: png, gif, jpeg, jpg");
-        fileInput.value = ""; 
+        fileInput.value = "";
       }
 
       setProductImage(event.target.files[0]);
@@ -40,16 +40,9 @@ export const ProductForm = (props: Props) => {
       production_date: productData.get("production_date"),
       block_hash: "",
     };
-
-  
-    setNewBlock(await MineBlockchain(ProductFormData.name as string,ProductFormData));
-    setProduct(await StoreProduct(ProductFormData));
-
-    if (newBlock) {
-      console.log(newBlock)
-      ProductFormData.block_hash = newBlock["block_hash"];
-      setProduct(await StoreProduct(ProductFormData));
-    }
+    setNewBlock(
+      await MineBlockchain(ProductFormData.name as string, ProductFormData)
+    );
     setPopup(true);
   }
 

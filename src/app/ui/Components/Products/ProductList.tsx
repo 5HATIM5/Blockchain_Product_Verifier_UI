@@ -128,7 +128,6 @@ const ProductList = (props: Props) => {
         ))}
       </div>
     </div>
-    
   ) : (
     <div className="flex justify-center items-center text-3xl mt-[10%]">
       No Products Found
