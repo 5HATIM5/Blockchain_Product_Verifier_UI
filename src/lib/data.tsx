@@ -4,7 +4,7 @@ type Props = {};
 
 export const GetBlockchain = async () => {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/blockchain/`, {
+    const res = await fetch(`http://mortiz-blockchain-api.vercel.app/blockchain/`, {
       method: "GET",
     });
     const data = await res.json();
@@ -59,7 +59,7 @@ export const MineBlockchain = async (productName: string,ProductFormData:object)
 
 export const GetProducts = async () => {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/products/`, {
+    const res = await fetch(`http://mortiz-blockchain-api.vercel.app/products/`, {
       method: "GET",
     });
     const data = await res.json();
