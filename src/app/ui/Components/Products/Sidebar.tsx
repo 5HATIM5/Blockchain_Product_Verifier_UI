@@ -6,9 +6,6 @@ import { ProductForm } from "./ProductForm";
 import { Tab } from "@headlessui/react";
 type Props = {};
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const Sidebar = (props: Props) => {
   let [categories] = useState({

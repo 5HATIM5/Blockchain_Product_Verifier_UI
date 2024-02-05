@@ -2,7 +2,6 @@
 
 import React from "react";
 import "../globals.css";
-import Card from "../ui/Components/Dashboard/Card";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import Link from "next/link";

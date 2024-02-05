@@ -13,7 +13,7 @@ const Card = (props: Props) => {
   async function checker() {
     const blockchain = await ValidateBlockchain();
     console.log(blockchain);
-    // setvalid(blockchain);
+    setvalid(blockchain);
   }
 
   return (

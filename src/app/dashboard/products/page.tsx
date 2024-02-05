@@ -24,7 +24,7 @@ const ProductsPage = (props: Props) => {
         component: <ProductForm />,
       },
     ],
-    Settings: [
+    "Settings": [
       {
         id: 3,
         component: <ProductForm />,
@@ -37,10 +37,6 @@ const ProductsPage = (props: Props) => {
       },
     ],
   });
-
-  function classNames(...classNames: string[]) {
-    return classNames.filter(Boolean).join(" ");
-  }
 
   return (
     <div className="min-h-screen">
