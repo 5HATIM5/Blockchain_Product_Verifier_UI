@@ -19,9 +19,10 @@ const ProductList = (props: Props) => {
 
   const [products, setProducts] = useState<Product[] | undefined>();
   const [loading, setLoading] = useState(true);
-  const [showPopover, setShowPopover] = useState(false);
   const [popoverMessage, setPopoverMessage] = useState("");
   const [showQRGenerator, setShowQRGenerator] = useState(false);
+  const [showDeleteGenerator, setShowDeleteGenerator] = useState(false);
+
   const [productNameForQR, setProductNameForQR] = useState("");
 
   const fetchProducts = async () => {
@@ -37,8 +38,9 @@ const ProductList = (props: Props) => {
 
   const handleDelete = async (product_id: number) => {
     try {
-      const response = await DeleteProduct(product_id);
-      console.log(response);
+      await DeleteProduct(product_id);
+      setShowDeleteGenerator(true);
+      setPopoverMessage("Product Deleted Successfully");
     } catch (error) {
       console.error("Error Deleting product:", error);
     }
@@ -51,7 +53,7 @@ const ProductList = (props: Props) => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [products]);
 
   return loading ? (
     <Loader />
@@ -122,10 +124,11 @@ const ProductList = (props: Props) => {
                     />
                   </svg>
                 </button>
-                {showPopover && (
+                {showDeleteGenerator && (
                   <Popover
                     header={"Product Deleted Successfully"}
                     message={popoverMessage}
+                    onClose={() => setShowDeleteGenerator(false)}
                   />
                 )}
                 {/* Link to genrate qr code for product */}

@@ -10,7 +10,6 @@ export const ProductForm = (props: Props) => {
   const [productImage, setProductImage] = useState();
   const [showPopover, setShowPopover] = useState(false);
   const [popoverMessage, setPopoverMessage] = useState("");
-  const [popup, setPopup] = useState(false);
 
   const ref = useRef<HTMLFormElement>(null);
 
@@ -44,7 +43,7 @@ export const ProductForm = (props: Props) => {
     setNewBlock(
       await MineBlockchain(ProductFormData.name as string, ProductFormData)
     );
-    setPopup(true);
+    setShowPopover(true);
     setPopoverMessage(
       " Your product has been successfully added. We’ve sent stored your product details in the public blockchain."
     );
@@ -55,7 +54,6 @@ export const ProductForm = (props: Props) => {
   // }
 
   useEffect(() => {
-    setPopup(false);
   }, []);
 
   return (
@@ -180,11 +178,11 @@ export const ProductForm = (props: Props) => {
           </button>
         </form>
       </div>
-      {popup && (
+      {showPopover && (
         <Popover
           header={"Product Added Successfully"}
           message={popoverMessage}
-          // onClose={() => setShowPopover(false)}
+          onClose={() => setShowPopover(false)}
         />
       )}
     </main>
