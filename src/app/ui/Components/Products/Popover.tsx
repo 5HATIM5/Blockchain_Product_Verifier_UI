@@ -2,7 +2,10 @@ import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 
-type Props = {};
+type Props = {
+  header: string;
+  message: string;
+};
 
 const Popover = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -42,13 +45,10 @@ const Popover = (props: Props) => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Product added successfully
+                  {props.header}
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Your product has been successfully added. We’ve sent stored
-                    your product details in the public blockchain.
-                  </p>
+                  <p className="text-sm text-gray-500">{props.message}</p>
                 </div>
 
                 <div className="mt-4">

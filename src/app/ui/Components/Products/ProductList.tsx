@@ -1,8 +1,10 @@
 "use client";
-import { GetProducts } from "@/lib/data";
+import { DeleteProduct, GetProducts } from "@/lib/data";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Loader from "../Global/Loader";
+import Popover from "./Popover";
+import QrPopUp from "./QrPopUp";
 
 type Props = {};
 
@@ -17,6 +19,10 @@ const ProductList = (props: Props) => {
 
   const [products, setProducts] = useState<Product[] | undefined>();
   const [loading, setLoading] = useState(true);
+  const [showPopover, setShowPopover] = useState(false);
+  const [popoverMessage, setPopoverMessage] = useState("");
+  const [showQRGenerator, setShowQRGenerator] = useState(false);
+  const [productNameForQR, setProductNameForQR] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -27,6 +33,20 @@ const ProductList = (props: Props) => {
     } catch (error) {
       console.error("Error fetching products:", error);
     }
+  };
+
+  const handleDelete = async (product_id: number) => {
+    try {
+      const response = await DeleteProduct(product_id);
+      console.log(response);
+    } catch (error) {
+      console.error("Error Deleting product:", error);
+    }
+  };
+
+  const generateQR = (productName: string) => {
+    setShowQRGenerator(true);
+    setProductNameForQR(productName); //
   };
 
   useEffect(() => {
@@ -41,11 +61,7 @@ const ProductList = (props: Props) => {
 
       <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
         {products?.map((product) => (
-          <span
-            key={product.id}
-       
-            className="group px-2 py-2"
-          >
+          <span key={product.id} className="group px-2 py-2">
             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
               <img
                 src="https://hips.hearstapps.com/hmg-prod/images/bananas-royalty-free-image-1702061943.jpg"
@@ -72,6 +88,7 @@ const ProductList = (props: Props) => {
                 Date: {product.date}
               </p>
               <div className="flex">
+                {/* Link to edit the product */}
                 <Link href={`/dashboard/products/${product.id}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +96,7 @@ const ProductList = (props: Props) => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="#1f2937"
-                    className="w-5 h-6 mr-4"
+                    className="w-5 h-6 mr-4 hover hover:text-blue-700"
                   >
                     <path
                       strokeLinecap="round"
@@ -88,40 +105,57 @@ const ProductList = (props: Props) => {
                     />
                   </svg>
                 </Link>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="#1f2937"
-                  className="w-5 h-6 mr-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                {/* Link to delete the product */}
+                <button onClick={() => handleDelete(product.id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="#1f2937"
+                    className="w-5 h-6 mr-4 hover hover:text-red-700"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+                {showPopover && (
+                  <Popover
+                    header={"Product Deleted Successfully"}
+                    message={popoverMessage}
                   />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-5 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
+                )}
+                {/* Link to genrate qr code for product */}
+                <button onClick={() => generateQR(product.name)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
+                    />
+                  </svg>
+                </button>
+                {showQRGenerator && (
+                  <QrPopUp
+                    productName={productNameForQR}
+                    onClose={() => setShowQRGenerator(false)}
                   />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
-                  />
-                </svg>
+                )}
               </div>
             </div>
           </span>

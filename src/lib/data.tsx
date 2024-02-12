@@ -1,10 +1,7 @@
-import React from "react";
-
-type Props = {};
-
 export const GetBlockchain = async () => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/blockchain/`, {
+    // const res = await fetch(`https://mortiz-blockchain-api.vercel.app/blockchain/`, {
+    const res = await fetch(`http://127.0.0.1:8000/blockchain/`, {
       method: "GET",
     });
     const data = await res.json();
@@ -16,7 +13,9 @@ export const GetBlockchain = async () => {
 
 export const ValidateBlockchain = async () => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/validate/`, {
+    // const res = await fetch(
+    // `https://mortiz-blockchain-api.vercel.app/validate/`,
+    const res = await fetch(`http://127.0.0.1:8000/validate/`, {
       method: "GET",
     });
     const data = await res.json();
@@ -28,7 +27,9 @@ export const ValidateBlockchain = async () => {
 
 export const GetLastBlock = async () => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/blockchain/last/`, {
+    // const res = await fetch(
+    // `https://mortiz-blockchain-api.vercel.app/blockchain/last/`,
+    const res = await fetch(`http://127.0.0.1:8000/blockchain/last/`, {
       method: "GET",
     });
     const data = await res.json();
@@ -38,10 +39,15 @@ export const GetLastBlock = async () => {
   }
 };
 
-export const MineBlockchain = async (productName: string,ProductFormData:object) => {
+export const MineBlockchain = async (
+  productName: string,
+  ProductFormData: object
+) => {
   try {
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/mine_block/?data=${productName}`,
     const res = await fetch(
-      `https://mortiz-blockchain-api.vercel.app/mine_block/?data=${productName}`,
+      `http://127.0.0.1:8000/mine_block/?data=${productName}`,
       {
         method: "POST",
         headers: {
@@ -59,9 +65,15 @@ export const MineBlockchain = async (productName: string,ProductFormData:object)
 
 export const GetProducts = async () => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/products/`, {
-      method: "GET",
-    });
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/products/`,
+    const res = await fetch(
+      `http://127.0.0.1:8000/products/`,
+
+      {
+        method: "GET",
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error) {
@@ -71,7 +83,9 @@ export const GetProducts = async () => {
 
 export const GetProductsById = async (product_id: number) => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/products/${product_id}`, {
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/products/${product_id}`,
+    const res = await fetch(`http://127.0.0.1:8000/products/${product_id}`, {
       method: "GET",
     });
     const data = await res.json();
@@ -83,7 +97,9 @@ export const GetProductsById = async (product_id: number) => {
 
 export const StoreProduct = async (productData: object) => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/store/product/`, {
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/store/product/`,
+    const res = await fetch(`http://127.0.0.1:8000/store/product/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,8 +118,10 @@ export const StoreProductImage = async (
   product_image: File
 ) => {
   try {
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/store/product/image?product_id=${product_id}`,
     const res = await fetch(
-      `https://mortiz-blockchain-api.vercel.app/store/product/image?product_id=${product_id}`,
+      `http://127.0.0.1:8000/product/image?product_id=${product_id}`,
       {
         method: "POST",
         body: JSON.stringify(product_image),
@@ -116,14 +134,36 @@ export const StoreProductImage = async (
   }
 };
 
-export const UpdateProduct = async (product_id:string, productData: object) => {
+export const UpdateProduct = async (
+  product_id: string,
+  productData: object
+) => {
   try {
-    const res = await fetch(`https://mortiz-blockchain-api.vercel.app/product/${product_id}`, {
+    // const res = await fetch(`https://mortiz-blockchain-api.vercel.app/product/${product_id}`, {
+    const res = await fetch(`http://127.0.0.1:8000/${product_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(productData),
+    });
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+export const DeleteProduct = async (product_id: number) => {
+  try {
+    // const res = await fetch(
+    //   `https://mortiz-blockchain-api.vercel.app/product/${product_id}`,
+    const res = await fetch(`http://127.0.0.1:8000/product/${product_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     const data = await res.json();
     console.log(data);
