@@ -72,7 +72,6 @@ export const MineBlockchain = async (
 
 export const GetProducts = async () => {
   try {
-    console.log(`https://mortiz-blockchain-api.vercel.app/products/`)
     const res = await fetch(
       `https://mortiz-blockchain-api.vercel.app/products/`,
 
@@ -157,7 +156,6 @@ export const UpdateProduct = async (
       }
     );
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -176,7 +174,6 @@ export const DeleteProduct = async (product_id: number) => {
       }
     );
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);

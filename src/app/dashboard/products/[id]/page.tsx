@@ -26,7 +26,6 @@ const SingleProductPage = (props: Props) => {
     try {
       const productData = await GetProductsById((id as unknown) as number);
       setProduct(productData.Response);
-      console.log(productData);
     } catch (error) {
       console.error("Error fetching products:", error);
     }

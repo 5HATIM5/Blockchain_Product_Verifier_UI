@@ -54,7 +54,6 @@ export const ProductForm = (props: Props) => {
     if (newBlockData && productImage) {
       const product_id = newBlockData.response.id;
       const response = await AddProductImage(product_id, productImage);
-      console.log(response);
     }
     setLoading(false);
     setShowPopover(true);
