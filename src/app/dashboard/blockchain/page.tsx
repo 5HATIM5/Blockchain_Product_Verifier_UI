@@ -1,6 +1,7 @@
 import React from "react";
 import "../../globals.css";
 import Card from "@/app/ui/Components/Dashboard/Card";
+import BlockchainCard from "@/app/ui/Components/Blockchain/BlockchainCard";
 
 type Props = {};
 
@@ -16,6 +17,7 @@ const BlockchainPage = (props: Props) => {
       </header>
       <div className="flex pt-4">
         <Card/>
+        {/* <BlockchainCard/> */}
       </div>
     </div>
   );

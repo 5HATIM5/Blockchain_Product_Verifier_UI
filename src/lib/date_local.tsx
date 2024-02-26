@@ -1,15 +1,8 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 export const GetBlockchain = async () => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/blockchain/`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/blockchain/`, {
+      method: "GET",
+    });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -19,12 +12,9 @@ export const GetBlockchain = async () => {
 
 export const ValidateBlockchain = async () => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/validate/`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/validate/`, {
+      method: "GET",
+    });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -34,12 +24,9 @@ export const ValidateBlockchain = async () => {
 
 export const GetLastBlock = async () => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/blockchain/last/`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/blockchain/last/`, {
+      method: "GET",
+    });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -53,7 +40,7 @@ export const MineBlockchain = async (
 ) => {
   try {
     const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/mine_block/?data=${productName}`,
+      `http://127.0.0.1:8000/mine_block/?data=${productName}`,
 
       {
         method: "POST",
@@ -72,9 +59,8 @@ export const MineBlockchain = async (
 
 export const GetProducts = async () => {
   try {
-    console.log(`http://mortiz-blockchain-api.vercel.app/products/`)
     const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/products/`,
+      `http://127.0.0.1:8000/products/`,
 
       {
         method: "GET",
@@ -90,7 +76,8 @@ export const GetProducts = async () => {
 export const GetProductsById = async (product_id: number) => {
   try {
     const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/products/${product_id}`,
+      `http://127.0.0.1:8000/products/${product_id}`,
+
       {
         method: "GET",
       }
@@ -104,16 +91,13 @@ export const GetProductsById = async (product_id: number) => {
 
 export const StoreProduct = async (productData: object) => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/store/product/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/store/product/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -127,7 +111,7 @@ export const StoreProductImage = async (
 ) => {
   try {
     const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/store/product/image?product_id=${product_id}`,
+      `http://127.0.0.1:8000/store/product/image?product_id=${product_id}`,
 
       {
         method: "POST",
@@ -146,16 +130,13 @@ export const UpdateProduct = async (
   productData: object
 ) => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/product/${product_id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/product/${product_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
     const data = await res.json();
     console.log(data);
     return data;
@@ -166,15 +147,12 @@ export const UpdateProduct = async (
 
 export const DeleteProduct = async (product_id: number) => {
   try {
-    const res = await fetch(
-      `http://mortiz-blockchain-api.vercel.app/product/${product_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`http://127.0.0.1:8000/product/${product_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const data = await res.json();
     console.log(data);
     return data;

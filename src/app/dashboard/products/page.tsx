@@ -24,18 +24,6 @@ const ProductsPage = (props: Props) => {
         component: <ProductForm />,
       },
     ],
-    "Settings": [
-      {
-        id: 3,
-        component: <ProductForm />,
-      },
-    ],
-    "Log Out": [
-      {
-        id: 4,
-        component: <ProductForm />,
-      },
-    ],
   });
 
   return (

@@ -1,6 +1,9 @@
-import { MineBlockchain, StoreProduct } from "@/lib/data";
+import { MineBlockchain } from "@/lib/data";
 import React, { useState, useRef, useEffect } from "react";
 import Popover from "./Popover";
+import { storage } from "@/lib/firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import Loader from "../Global/Loader";
 
 type Props = {};
 
@@ -10,8 +13,8 @@ export const ProductForm = (props: Props) => {
   const [productImage, setProductImage] = useState();
   const [showPopover, setShowPopover] = useState(false);
   const [popoverMessage, setPopoverMessage] = useState("");
-
-  const ref = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const validateFileType = (event: { target: any }) => {
     const fileInput = event.target;
@@ -27,11 +30,11 @@ export const ProductForm = (props: Props) => {
       }
 
       setProductImage(event.target.files[0]);
-      console.log(event.target.files[0]);
     }
   };
 
   async function AddProductData(productData: FormData) {
+    setLoading(true);
     const ProductFormData = {
       name: productData.get("name"),
       // ingredients: formData.get("ingredients"),
@@ -40,23 +43,39 @@ export const ProductForm = (props: Props) => {
       production_date: productData.get("production_date"),
       block_hash: "",
     };
-    setNewBlock(
-      await MineBlockchain(ProductFormData.name as string, ProductFormData)
+
+    const newBlockData = await MineBlockchain(
+      ProductFormData.name as string,
+      ProductFormData
     );
+
+    setNewBlock(newBlockData);
+
+    if (newBlockData && productImage) {
+      const product_id = newBlockData.response.id;
+      const response = await AddProductImage(product_id, productImage);
+      console.log(response);
+    }
+    setLoading(false);
     setShowPopover(true);
     setPopoverMessage(
       " Your product has been successfully added. We’ve sent stored your product details in the public blockchain."
     );
   }
 
-  // async function AddProductImage(product_id: number, ProductImage: File) {
-  //   console.log(product_id, ProductImage);
-  // }
+  async function AddProductImage(product_id: number, ProductImage: File) {
+    try {
+      const imageRef = ref(storage, `images/${product_id}`);
+      const response = await uploadBytes(imageRef, ProductImage);
+      return response;
+    } catch (error) {
+      console.error("Error uploading Image:", error);
+    }
+  }
 
-  useEffect(() => {
-  }, []);
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <main className="flex min-h-screen flex-col justify-start items-center p-7">
       <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] pb-10 z-[-1]">
         <h1 className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert text-3xl uppercase">
@@ -66,10 +85,10 @@ export const ProductForm = (props: Props) => {
 
       <div className="flex justify-center items-center">
         <form
-          ref={ref}
+          ref={formRef}
           action={async (formData) => {
             await AddProductData(formData);
-            ref.current?.reset();
+            formRef.current?.reset();
           }}
         >
           <div className="relative z-0 w-full mb-6 group">
@@ -168,6 +187,7 @@ export const ProductForm = (props: Props) => {
               accept="image/png, image/gif, image/jpeg"
               onChange={validateFileType}
               className="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-5 file:rounded file:border-0 file:text-sm file:font-semiboldfile:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+              required
             />
           </label>
           <button
