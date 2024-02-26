@@ -45,7 +45,6 @@ const ProductList = (props: Props) => {
       await DeleteProduct(product_id);
       setShowDeleteGenerator(true);
       setPopoverMessage("Product Deleted Successfully");
-      alert(`images/${product_id}.jpeg`);
       const desertRef = ref(storage, `images/${product_id}`);
       const response = await deleteObject(desertRef);
       setProducts((prevProducts) =>
