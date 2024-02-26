@@ -16,7 +16,7 @@ const Card = (props: Props) => {
   }
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white ml-4">
+    <div className="max-w-sm max-h-36 rounded overflow-hidden shadow-lg bg-white ml-4">
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">Validate Blockchain</div>
         <p className="text-gray-700 text-base">

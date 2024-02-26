@@ -11,7 +11,9 @@ export const GetBlockchain = async () => {
       }
     );
     const data = await res.json();
+    console.log(data)
     return data;
+    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -179,3 +181,4 @@ export const DeleteProduct = async (product_id: number) => {
     console.error("Error fetching data:", error);
   }
 };
+

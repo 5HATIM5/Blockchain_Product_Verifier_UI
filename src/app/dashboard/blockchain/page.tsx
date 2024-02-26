@@ -17,7 +17,7 @@ const BlockchainPage = (props: Props) => {
       </header>
       <div className="flex pt-4">
         <Card/>
-        {/* <BlockchainCard/> */}
+        <BlockchainCard/>
       </div>
     </div>
   );
